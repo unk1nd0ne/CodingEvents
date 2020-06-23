@@ -9,17 +9,22 @@
 }
 else
 {
-    <table>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+
+    </tr>
+
+    @foreach (Event thing in ViewBag.events)
+    {
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <td>@thing.Id</td>
+            <td>@thing.Name</td>
+            <td>@thing.Description</td>
         </tr>
-        <tr>
-            @foreach (string thing in ViewBag.events.Keys)
-            {
-                <td>@thing</td>
-                <td>@ViewBag.events[thing]</td>
-            }
-         </tr>
+     }
+        
     </table>
 }

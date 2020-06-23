@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using CodingEvents.Models;
+using CodingEvents.Data;
 
 namespace CodingEvents.Controllers
 {
     [Route("Events")]
     public class EventsController : Controller
     {
-        static private Dictionary<string, string> Events = new Dictionary<string, string>();
+        //static private List<Event> Events = new List<Event>();
         //GET: events
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.events = Events;
+            ViewBag.events = EventData.GetAll();
 
             return View();
         }
@@ -29,9 +31,16 @@ namespace CodingEvents.Controllers
         public IActionResult AddEvent(string name, string description)
         {
             //Events.Add(name, date.Date.ToString("d"));
-            Events.Add(name, description);
+            EventData.Add(new Event(name, description));
 
             return Redirect("/Events");
+        }
+
+        public IActionResult Delete()
+        {
+            ViewBag.events = EventData.GetAll();
+
+            return View();
         }
     }
 }
