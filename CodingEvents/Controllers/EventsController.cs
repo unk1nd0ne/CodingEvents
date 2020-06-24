@@ -28,10 +28,10 @@ namespace CodingEvents.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult AddEvent(string name, string description)
+        public IActionResult AddEvent(Event newEvent)
         {
             //Events.Add(name, date.Date.ToString("d"));
-            EventData.Add(new Event(name, description));
+            EventData.Add(newEvent);
 
             return Redirect("/Events");
         }
@@ -50,6 +50,25 @@ namespace CodingEvents.Controllers
             {
                 EventData.Remove(eventId);
             }
+
+            return Redirect("/Events");
+        }
+
+        [HttpGet("Edit/{eventId}")]
+        public IActionResult Edit(int eventId)
+        {
+            // controller code will go here
+            ViewBag.eventToEdit = EventData.GetById(eventId);
+            ViewBag.title = $"Edit Event {EventData.GetById(eventId).Name}(id = {eventId})";
+            return View();
+        }
+
+        [HttpPost("Edit")]
+        public IActionResult SubmitEditEventForm(int eventId, string name, string description)
+        {
+            // controller code will go here
+            EventData.GetById(eventId).Name = name;
+            EventData.GetById(eventId).Description = description;
 
             return Redirect("/Events");
         }
